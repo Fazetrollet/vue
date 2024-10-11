@@ -18,5 +18,14 @@ onMounted(() => {
       denna sidan har visats:
       <b>{{ views }}</b>
     </p>
+    <ul>
+      två till synes lika länkar som fungerar på olika sätt:
+      <li>
+        <a href="/my">My View</a>
+      </li>
+      <li>
+        <RouterLink to="/my">My View</RouterLink>
+      </li>
+    </ul>
   </main>
 </template>

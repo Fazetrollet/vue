@@ -15,6 +15,7 @@ provide('HomeViews', HomeViews)
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/my">min sida</RouterLink>
       </nav>
     </div>
   </header>

@@ -21,8 +21,18 @@ const router = createRouter({
       path: '/my',
       name: 'my view',
       component: () => import('../views/MyView.vue')
+    },
+    {
+      path: '/:catchAll(.*)',
+      component: () => import('../views/NoShow.vue'),
+      meta: {
+        title: 404
+      }
     }
   ]
 })
 
 export default router
+router.beforeEach((to) => {
+  document.title = to.meta?.title ?? 'Default Title'
+})
