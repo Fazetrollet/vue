@@ -1,5 +1,10 @@
 <script setup>
+import { provide, ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
+
+const HomeViews = ref(0)
+
+provide('HomeViews', HomeViews)
 </script>
 
 <template>
@@ -16,6 +21,4 @@ import { RouterLink, RouterView } from 'vue-router'
   <RouterView />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
