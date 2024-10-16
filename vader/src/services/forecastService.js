@@ -26,7 +26,8 @@ function transformData(raw) {
   weatherData.weather = []
   for (let i = 0; i < raw.daily.time.length; i++) {
     let data = {
-      date: raw.daily.weather_code[i],
+      date: raw.daily.time[i],
+      code: raw.daily.weather_code[i],
       temp: {
         max: raw.daily.temperature_2m_max[i],
         min: raw.daily.temperature_2m_min[i],
