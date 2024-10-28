@@ -12,6 +12,7 @@ function getText(code) {
   return wcText
 }
 </script>
+
 <template>
   <ul>
     <li>Date</li>
