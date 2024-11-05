@@ -38,4 +38,30 @@ watch(
     </p>
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+.score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em; /* Gör texten lite större */
+  font-weight: bold;
+  margin: 1.5em 0;
+}
+
+/* Knapp för att nollställa poängen */
+#nolla {
+  padding: 0.5em 1em;
+  font-size: 1em;
+  background-color: #f44336; /* Röd färg för nollställningsknappen */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 1em;
+}
+
+#nolla:hover {
+  background-color: #d32f2f; /* Mörkare röd vid hover */
+}
+</style>

@@ -1,19 +1,10 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@/views/HomeView.vue'
-import BestOfFive from '@/views/BestAvFem.vue' // Se till att denna komponent existerar
+import bestAvFem from '@/views/bestAvFem.vue' // Ensure the path and casing match your file structure
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: HomeView // Huvudsidan är nu HomeView
-  },
-  {
-    path: '/best-of-five',
-    name: 'BestAvFem', // Se till att namnet matchar
-    component: BestOfFive
-  }
+  { path: '/', name: 'Home', component: () => import('@/App.vue') }, // Using App.vue as the main component
+  { path: '/best-of-five', name: 'bestAvFem', View: bestAvFem } // Route for the Best of Five game
 ]
 
 const router = createRouter({

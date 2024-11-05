@@ -1,85 +1,90 @@
+<template>
+  <div class="home">
+    <h1 class="title">Sten, Sax, Påse</h1>
+    <KnappRad :knappar="knappar" @valda-knappar="hittaVinnare" :reset="reset" />
+    <ResultatRad :valda-knappar="resultat" @vinnare="raknaPoang" :reset="reset" />
+    <PoangRad :vinnare="vinnare" :reset="reset" />
+
+    <!-- Knapp för att nollställa spelet och en knapp för att komma till sidan som är bäst av fem spelet -->
+    <div class="buttons">
+      <button @click="resetGame">Nollställ poäng</button>
+      <button @click="tillBestAvFem">Spela Bäst av Fem</button>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import KnappRad from './components/KnappRad.vue'
 import ResultatRad from './components/ResultatRad.vue'
 import PoangRad from './components/PoangRad.vue'
-import { useRouter } from 'vue-router'
 
+const router = useRouter()
+
+// Skapar en variabel med alternativen 'Sten', 'Sax', 'Påse'
 const knappar = ref(['Sten', 'Sax', 'Påse'])
+
+// 'resultat' lagrar valda alternativ från spelare och dator, 'vinnare' för vem som vunnit, 'reset' anger om spelet är i resetläge
 const resultat = ref({})
 const vinnare = ref('')
 const reset = ref(true)
 
+// Funktion för att bestämma vinnaren baserat på de valda alternativen från spelaren och datorn
 function hittaVinnare(valdaKnappar) {
-  vinnare.value = ''
-  reset.value = false
-  let spelare = knappar.value.indexOf(valdaKnappar.spelare)
-  let dator = knappar.value.indexOf(valdaKnappar.dator)
-  resultat.value = { spelare: spelare, dator: dator }
-  reset.value = false
+  vinnare.value = '' // Nollställer vinnaren
+  reset.value = false // gör reset till false
+  resultat.value = {
+    spelare: knappar.value.indexOf(valdaKnappar.spelare), // Hittar indexet för spelarens val
+    dator: knappar.value.indexOf(valdaKnappar.dator) // Hittar indexet för datorns val
+  }
 }
+
+// Funktion för att uppdatera vinnaren baserat på spelresultatet
 function raknaPoang(v) {
   vinnare.value = v
 }
 
-const router = useRouter()
+// Funktion för att nollställa spelet
+function resetGame() {
+  reset.value = true
+}
 
-function TillBestAvFem() {
-  router.push({ name: 'BestAvFem' })
+// Funktion för att navigera till bäst av fem sidan
+function tillBestAvFem() {
+  router.push({ name: 'bestAvFem' })
 }
 </script>
 
-<template>
-  <header>
-    <h1>sten, sax, påse!</h1>
-  </header>
-
-  <main>
-    <KnappRad :knappar="knappar" @valda-knappar="hittaVinnare" :reset="reset" />
-    <ResultatRad :valda-knappar="resultat" @vinnare="raknaPoang" :reset="reset" />
-    <PoangRad :vinnare="vinnare" :reset="reset" />
-    <div class="score">
-      <button id="nolla" @click="reset = true">Nollställ poängen</button>
-    </div>
-    <div class="bestAvFem">
-      <button @click="TillBestAvFem">Spela Bäst av Fem</button>
-    </div>
-  </main>
-</template>
-
 <style scoped>
-header {
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  margin-bottom: 1.2em;
+  padding: 2em;
 }
-.score {
-  font-size: 1.2em;
-  text-align: center;
+.title {
+  font-size: 2em;
+  margin-bottom: 1.5em;
 }
-#nolla {
-  margin-top: 2em;
-  padding: 0.3em 0.6em;
-  font-size: 0.8em;
+.buttons {
+  display: flex;
+  gap: 1em;
+  margin-top: 1.5em;
 }
 button {
   padding: 0.6em 1.2em;
-  font-size: 1.2em;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  cursor: pointer;
-}
-#bestAvFem {
-  padding: 1em;
-  font-size: 1.2em;
-  margin-top: 2em;
-  cursor: pointer;
+  font-size: 1em;
   background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
-#bestAvFem:hover {
+button:hover {
   background-color: #45a049;
 }
 </style>
