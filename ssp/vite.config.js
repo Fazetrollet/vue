@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/ssp',
+  base: '/~60919/ssp/', // adjust to your actual path
   plugins: [vue()],
   resolve: {
     alias: {

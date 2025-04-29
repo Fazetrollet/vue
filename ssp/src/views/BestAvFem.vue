@@ -2,8 +2,8 @@
   <div class="baf">
     <h1 class="ba">Bäst av Fem</h1>
     <KnappRad :knappar="knappar" @valda-knappar="hittaVinnare" :reset="reset" />
-    <ResultatRad :valda-knappar="resultat" @vinnare="raknaPoang" :reset="reset" />
-    <PoangRad :vinnare="vinnare" :reset="reset" />
+    <div class="score">Ställning: Du {{ spelarePoang }} - Datorn {{ datorPoang }}</div>
+    <ResultatRad :valda-knappar="resultat" :reset="reset" />
     <p>{{ spelStatus }}</p>
     <button @click="tillbakaTillHem">Tillbaka till Hem</button>
 
@@ -40,7 +40,30 @@ const reset = ref(false)
 const slutResultat = ref('') // Text för att visa om någon har vunnit bäst av fem
 
 function hittaVinnare(valdaKnappar) {
-  resultat.value = valdaKnappar
+  // Sätt alltid resultatet som ett objekt med strängar
+  resultat.value = {
+    spelare: valdaKnappar.spelare,
+    dator: valdaKnappar.dator
+  }
+
+  // Rättvis vinnare enligt reglerna
+  let winner = ''
+  const spelare = valdaKnappar.spelare
+  const dator = valdaKnappar.dator
+
+  if (spelare === dator) {
+    winner = 'oavgjort'
+  } else if (
+    (spelare === 'Sten' && dator === 'Sax') ||
+    (spelare === 'Sax' && dator === 'Påse') ||
+    (spelare === 'Påse' && dator === 'Sten')
+  ) {
+    winner = 'spelare'
+  } else {
+    winner = 'dator'
+  }
+
+  raknaPoang(winner)
   modalVisible.value = true
   countdown.value = 5
   startCountdown()
@@ -58,8 +81,12 @@ function startCountdown() {
 }
 
 function raknaPoang(vinnare) {
-  if (vinnare === 'spelare') spelarePoang.value++
-  else if (vinnare === 'dator') datorPoang.value++
+  if (vinnare === 'spelare') {
+    spelarePoang.value++
+  } else if (vinnare === 'dator') {
+    datorPoang.value++
+  }
+  // Ingen poäng vid oavgjort
 
   if (spelarePoang.value >= 3) {
     slutResultat.value = 'Grattis! Du vann bäst av fem!'
@@ -84,7 +111,7 @@ function startaOm() {
 }
 
 function tillbakaTillHem() {
-  router.push({ name: 'Home' })
+  router.push({ name: 'start' }) // ändrat från 'Home' till 'start'
 }
 </script>
 
@@ -117,5 +144,11 @@ function tillbakaTillHem() {
   font-size: 1.2em;
   font-weight: bold;
   color: #555;
+}
+.score {
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-bottom: 1em;
+  text-align: center;
 }
 </style>
